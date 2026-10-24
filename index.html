@@ -2,169 +2,189 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101820">
 <title>حسابات المكتب</title>
 <style>
-:root{--bg:#0d141b;--panel:#151f29;--line:#2a3a49;--text:#edf4f8;--muted:#9eb0bd;--lime:#b7e45b;--green:#a9e58c;--red:#ff8d8d;--blue:#72c8ef}
+:root{--bg:#0d141b;--panel:#151f29;--panel2:#1b2834;--line:#2a3a49;--text:#edf3f7;--muted:#9babb8;--lime:#b7e34a;--green:#5fd39a;--red:#ff7777}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.6}
-header{padding:20px 16px;background:#14222d;border-bottom:1px solid var(--line)}
-header h1{margin:0;font-size:23px}
-header p{margin:4px 0;color:var(--muted);font-size:13px}
-main{max-width:1100px;margin:auto;padding:16px}
-.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px;margin-bottom:14px}
-h2{font-size:17px;margin:0 0 12px}
-button,.btn{background:var(--panel);border:1px solid var(--line);border-radius:9px;color:var(--text);padding:10px 13px;font:inherit;cursor:pointer}
-.primary{background:var(--lime);color:#14200b;border-color:var(--lime);font-weight:bold}
-input,select{width:100%;padding:11px;border-radius:8px;border:1px solid #354858;background:#0d151d;color:var(--text);font:inherit}
-label{display:block;font-size:13px;color:var(--muted);margin:7px 0 4px}
-.field{margin-bottom:10px}
-nav{display:flex;gap:7px;overflow:auto;margin-bottom:14px}
-nav button{white-space:nowrap}
-nav button.active{background:var(--lime);color:#14200b}
-.page{display:none}.page.active{display:block}
-.cards,.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.label,.muted,.small{color:var(--muted);font-size:13px}
-.amount{font-size:22px;font-weight:bold;overflow-wrap:anywhere}
-.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}
-.tablewrap{overflow:auto}
-table{border-collapse:collapse;width:100%;min-width:560px}
-th,td{text-align:right;padding:9px;border-bottom:1px solid var(--line);font-size:13px}
-.notice{padding:10px;border-radius:9px;background:#202c1b;color:#d9f2b3;margin-bottom:12px;font-size:13px}
-.row{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line);padding:9px 0}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-#app{display:none}
-#login{max-width:480px;margin:30px auto}
-.status{font-size:13px;color:var(--muted);margin:8px 0}
-@media(min-width:750px){.cards{grid-template-columns:repeat(4,minmax(0,1fr))}.grid{grid-template-columns:1fr 1fr}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.7}
+header{padding:18px;background:#101820;border-bottom:1px solid var(--line)}
+header h1{margin:0;font-size:24px;color:var(--lime)}
+header p{margin:4px 0 0;color:var(--muted);font-size:13px}
+main{max-width:1000px;padding:14px;margin:auto}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+h2{font-size:18px;margin:0 0 12px}
+h3{font-size:15px}
+label{display:block;color:var(--muted);font-size:13px;margin:9px 0 4px}
+input,select,textarea{width:100%;padding:11px;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:9px;font:inherit}
+textarea{min-height:70px;resize:vertical}
+button{padding:10px 14px;border:0;border-radius:9px;background:var(--lime);color:#17200b;font-weight:bold;font-size:14px;cursor:pointer}
+button.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+button.danger{background:#512b31;color:#ffdfe2}
+button:disabled{opacity:.5;cursor:not-allowed}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+nav{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px}
+nav button{flex:0 0 auto;white-space:nowrap}
+nav button.active{background:var(--lime);color:#17200b}
+.hidden{display:none!important}
+.muted{color:var(--muted);font-size:13px}
+.status{padding:10px;border-radius:9px;background:var(--panel2);margin:8px 0;overflow-wrap:anywhere}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{padding:13px;background:var(--panel2);border:1px solid var(--line);border-radius:11px}
+.stat small{color:var(--muted);display:block}
+.stat strong{display:block;font-size:20px;overflow-wrap:anywhere}
+.good{color:var(--green)}.bad{color:var(--red)}
+.item{padding:12px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.item:last-child{border-bottom:0}
+.item strong{color:var(--lime)}
+.table-wrap{overflow-x:auto}
+#loginScreen{max-width:480px;margin:35px auto}
+#appScreen{display:none}
+footer{text-align:center;color:var(--muted);padding:18px;font-size:12px}
+@media(max-width:520px){main{padding:10px}.row{grid-template-columns:1fr}header h1{font-size:21px}}
 </style>
 </head>
 <body>
 <header>
-<h1>حسابات المكتب</h1>
-<p>الإيرادات والمصروفات ومخزون رولات الورق</p>
+  <h1>حسابات المكتب</h1>
+  <p>نظام الحسابات ومخزون رولات الورق</p>
 </header>
-
 <main>
-<section id="login" class="panel">
-<h2>تسجيل الدخول</h2>
-<p class="muted">سجّلي الدخول بالبريد الإلكتروني وكلمة المرور المسجلين في Firebase.</p>
-<form id="loginForm">
-<div class="field">
-<label for="email">البريد الإلكتروني</label>
-<input id="email" type="email" autocomplete="username" required>
-</div>
-<div class="field">
-<label for="password">كلمة المرور</label>
-<input id="password" type="password" autocomplete="current-password" required>
-</div>
-<button class="primary" type="submit">تسجيل الدخول</button>
-<p id="loginMessage" class="status"></p>
-</form>
+<section id="loginScreen" class="card">
+  <h2>تسجيل الدخول</h2>
+  <p class="muted">سجّلي الدخول بحساب Firebase الخاص بيكي.</p>
+  <form id="loginForm">
+    <label for="email">البريد الإلكتروني</label>
+    <input id="email" type="email" autocomplete="username" required placeholder="البريد الإلكتروني">
+    <label for="password">كلمة المرور</label>
+    <input id="password" type="password" autocomplete="current-password" required placeholder="كلمة المرور">
+    <div class="actions">
+      <button id="loginBtn" type="submit">دخول</button>
+      <button id="resetBtn" class="secondary" type="button">نسيت كلمة المرور؟</button>
+    </div>
+  </form>
+  <div id="loginStatus" class="status" role="status">جاري تجهيز تسجيل الدخول...</div>
 </section>
 
-<section id="app">
-<div class="notice">حالة المزامنة: <span id="syncStatus">جارٍ الاتصال...</span></div>
-<div class="actions"><button id="logout">تسجيل الخروج</button></div>
+<section id="appScreen">
+  <div class="card">
+    <div class="row">
+      <div><strong>حسابات المكتب</strong><div id="userEmail" class="muted"></div></div>
+      <div class="actions" style="margin-top:0"><button id="logoutBtn" class="secondary">تسجيل الخروج</button></div>
+    </div>
+    <div id="syncStatus" class="status">جاري الاتصال...</div>
+  </div>
 
-<nav>
-<button class="active" data-page="home">الرئيسية</button>
-<button data-page="transactions">تسجيل عملية</button>
-<button data-page="inventory">مخزون الرولات</button>
-<button data-page="reports">التقرير الأسبوعي</button>
-<button data-page="data">النسخ الاحتياطي</button>
-</nav>
+  <nav id="navigation">
+    <button class="active" data-page="home">الرئيسية</button>
+    <button data-page="transaction">تسجيل عملية</button>
+    <button data-page="stock">مخزون الرولات</button>
+    <button data-page="report">التقرير الأسبوعي</button>
+    <button data-page="backup">النسخ الاحتياطي</button>
+  </nav>
 
-<section id="home" class="page active">
-<div class="cards">
-<div class="card"><div class="label">إيرادات الأسبوع</div><div id="homeIncome" class="amount green">0 ج.م</div></div>
-<div class="card"><div class="label">مصروفات الأسبوع</div><div id="homeExpense" class="amount red">0 ج.م</div></div>
-<div class="card"><div class="label">صافي الأسبوع</div><div id="homeNet" class="amount blue">0 ج.م</div></div>
-<div class="card"><div class="label">الرولات المتاحة</div><div id="homeStock" class="amount">0</div></div>
-</div>
-<div class="grid">
-<div class="panel"><h2>ملخص الأقسام</h2><div id="departmentSummary" class="muted"></div></div>
-<div class="panel"><h2>آخر العمليات</h2><div id="recentTransactions" class="muted"></div></div>
-</div>
-</section>
+  <section id="page-home" class="page">
+    <div class="card">
+      <h2>ملخص الحسابات</h2>
+      <div class="stats">
+        <div class="stat"><small>الإيرادات</small><strong id="homeIncome" class="good">0 ج.م</strong></div>
+        <div class="stat"><small>المصروفات</small><strong id="homeExpense" class="bad">0 ج.م</strong></div>
+        <div class="stat"><small>الصافي</small><strong id="homeNet">0 ج.م</strong></div>
+        <div class="stat"><small>عدد العمليات</small><strong id="homeCount">0</strong></div>
+        <div class="stat"><small>رصيد الرولات</small><strong id="homeStock">0</strong></div>
+        <div class="stat"><small>حركات المخزون</small><strong id="homeMovements">0</strong></div>
+      </div>
+    </div>
+    <div class="card"><h2>آخر العمليات</h2><div id="recentList" class="muted">مفيش عمليات مسجلة.</div></div>
+  </section>
 
-<section id="transactions" class="page">
-<div class="grid">
-<div class="panel">
-<h2>تسجيل إيراد أو مصروف</h2>
-<form id="txForm">
-<label for="txDate">التاريخ</label><input id="txDate" type="date" required>
-<label for="txType">نوع العملية</label><select id="txType"><option value="income">إيراد</option><option value="expense">مصروف</option></select>
-<label for="txDept">القسم</label><select id="txDept"><option>طباعة الماركر</option><option>عمل الباترونات</option><option>بيع رولات الورق</option><option>مصروفات عامة</option><option>أخرى</option></select>
-<label for="txAmount">المبلغ (ج.م)</label><input id="txAmount" type="number" min="0.01" step="0.01" required>
-<label for="txPayment">طريقة الدفع</label><select id="txPayment"><option>كاش</option><option>تحويل</option></select>
-<label for="txDesc">البيان</label><input id="txDesc" maxlength="120">
-<button class="primary" type="submit">حفظ العملية</button>
-</form>
-</div>
-<div class="panel">
-<h2>العمليات المسجلة</h2>
-<label for="txFilter">عرض العمليات</label>
-<select id="txFilter"><option value="all">كل العمليات</option><option value="income">الإيرادات فقط</option><option value="expense">المصروفات فقط</option></select>
-<div class="tablewrap"><table><thead><tr><th>التاريخ</th><th>النوع</th><th>القسم</th><th>المبلغ</th><th>الدفع</th><th>البيان</th><th></th></tr></thead><tbody id="txTable"></tbody></table></div>
-</div>
-</div>
-</section>
+  <section id="page-transaction" class="page hidden">
+    <div class="card">
+      <h2>تسجيل عملية مالية</h2>
+      <form id="transactionForm">
+        <div class="row">
+          <div><label for="txType">نوع العملية</label><select id="txType"><option value="income">إيراد</option><option value="expense">مصروف</option></select></div>
+          <div><label for="txSection">القسم</label><select id="txSection"><option value="printing">طباعة المركر</option><option value="patterns">عمل الباترونات</option><option value="paper">بيع رولات الورق</option><option value="other">أخرى</option></select></div>
+        </div>
+        <label for="txAmount">المبلغ بالجنيه</label>
+        <input id="txAmount" type="number" min="0.01" step="0.01" required placeholder="مثال: 250">
+        <div class="row">
+          <div><label for="txPayment">طريقة الدفع</label><select id="txPayment"><option value="cash">نقدي</option><option value="bank">تحويل بنكي</option></select></div>
+          <div><label for="txDate">التاريخ</label><input id="txDate" type="date" required></div>
+        </div>
+        <label for="txDescription">التفاصيل</label>
+        <textarea id="txDescription" placeholder="تفاصيل العملية (اختياري)"></textarea>
+        <div class="actions"><button id="saveTxBtn" type="submit">حفظ العملية</button></div>
+        <div id="txStatus" class="muted" role="status"></div>
+      </form>
+    </div>
+    <div class="card"><h2>كل العمليات</h2><div id="transactionList">جاري تحميل البيانات...</div></div>
+  </section>
 
-<section id="inventory" class="page">
-<div class="grid">
-<div class="panel">
-<h2>حركة مخزون</h2>
-<form id="stockForm">
-<label for="stockDate">التاريخ</label><input id="stockDate" type="date" required>
-<label for="stockKind">نوع الحركة</label><select id="stockKind"><option value="in">كمية واردة</option><option value="out">صرف / بيع</option><option value="adjust">تسوية الرصيد</option></select>
-<label for="stockQty">عدد الرولات</label><input id="stockQty" type="number" min="0.01" step="0.01" required>
-<label for="stockName">نوع / مقاس الورق</label><input id="stockName" maxlength="80" required>
-<label for="stockNote">ملاحظات</label><input id="stockNote" maxlength="120">
-<button class="primary" type="submit">حفظ حركة المخزون</button>
-</form>
-</div>
-<div class="panel"><h2>الرصيد الحالي</h2><div id="stockSummary"></div></div>
-</div>
-<div class="panel"><h2>سجل المخزون</h2><div class="tablewrap"><table><thead><tr><th>التاريخ</th><th>النوع</th><th>الحركة</th><th>الكمية</th><th>ملاحظات</th><th></th></tr></thead><tbody id="stockTable"></tbody></table></div></div>
-</section>
+  <section id="page-stock" class="page hidden">
+    <div class="card">
+      <h2>تسجيل حركة مخزون</h2>
+      <form id="stockForm">
+        <label for="stockType">نوع الحركة</label>
+        <select id="stockType"><option value="in">إضافة رولات</option><option value="out">صرف رولات</option><option value="adjust">تعديل الرصيد الفعلي</option></select>
+        <label for="stockQty">الكمية (عدد الرولات)</label>
+        <input id="stockQty" type="number" min="1" step="1" required placeholder="مثال: 5">
+        <label for="stockDate">التاريخ</label><input id="stockDate" type="date" required>
+        <label for="stockNote">ملاحظات</label><input id="stockNote" type="text" placeholder="اختياري">
+        <div class="actions"><button id="saveStockBtn" type="submit">حفظ الحركة</button></div>
+        <div id="stockStatus" class="muted" role="status"></div>
+      </form>
+    </div>
+    <div class="card"><h2>الرصيد الحالي: <strong id="stockBalance">0</strong></h2><h3>سجل الحركات</h3><div id="stockList">جاري تحميل البيانات...</div></div>
+  </section>
 
-<section id="reports" class="page">
-<div class="panel">
-<h2>التقرير الأسبوعي</h2>
-<label for="weekStart">بداية الأسبوع</label><input id="weekStart" type="date">
-<label for="weekEnd">نهاية الأسبوع</label><input id="weekEnd" type="date">
-<div class="actions"><button class="primary" id="makeReport" type="button">تحديث التقرير</button><button id="exportReport" type="button">تصدير CSV</button></div>
-<div class="cards">
-<div class="card"><div class="label">الإيرادات</div><div id="repIncome" class="amount green">0 ج.م</div></div>
-<div class="card"><div class="label">المصروفات</div><div id="repExpense" class="amount red">0 ج.م</div></div>
-<div class="card"><div class="label">الصافي</div><div id="repNet" class="amount blue">0 ج.م</div></div>
-<div class="card"><div class="label">عدد العمليات</div><div id="repCount" class="amount">0</div></div>
-</div>
-<div class="grid"><div><h2>حسب القسم</h2><div id="repDept"></div></div><div><h2>حسب الدفع</h2><div id="repPayment"></div></div></div>
-</div>
-</section>
+  <section id="page-report" class="page hidden">
+    <div class="card">
+      <h2>التقرير الأسبوعي</h2>
+      <div class="row">
+        <div><label for="reportFrom">من تاريخ</label><input id="reportFrom" type="date" required></div>
+        <div><label for="reportTo">إلى تاريخ</label><input id="reportTo" type="date" required></div>
+      </div>
+      <div class="actions"><button id="runReportBtn" type="button">عرض التقرير</button><button id="csvBtn" class="secondary" type="button">تصدير CSV</button></div>
+    </div>
+    <div class="card">
+      <h2>نتيجة التقرير</h2>
+      <div class="stats">
+        <div class="stat"><small>الإيرادات</small><strong id="reportIncome" class="good">0 ج.م</strong></div>
+        <div class="stat"><small>المصروفات</small><strong id="reportExpense" class="bad">0 ج.م</strong></div>
+        <div class="stat"><small>الصافي</small><strong id="reportNet">0 ج.م</strong></div>
+        <div class="stat"><small>عدد العمليات</small><strong id="reportCount">0</strong></div>
+      </div>
+      <h3>حسب القسم</h3><div id="reportSections"></div>
+      <h3>حسب طريقة الدفع</h3><div id="reportPayments"></div>
+    </div>
+  </section>
 
-<section id="data" class="page">
-<div class="panel">
-<h2>نسخة احتياطية</h2>
-<p class="muted">تنزيل نسخة JSON من العمليات والمخزون.</p>
-<div class="actions"><button id="backup" class="primary" type="button">تنزيل نسخة احتياطية</button><label class="btn" for="restoreFile">استعادة نسخة</label><input id="restoreFile" type="file" accept=".json,application/json" hidden></div>
-</div>
-<div class="panel">
-<h2>تصدير العمليات والمخزون</h2>
-<div class="actions"><button id="exportTx" type="button">تصدير العمليات CSV</button><button id="exportStock" type="button">تصدير المخزون CSV</button></div>
-</div>
-</section>
+  <section id="page-backup" class="page hidden">
+    <div class="card">
+      <h2>النسخ الاحتياطي</h2>
+      <p class="muted">البيانات بتتزامن من خلال Firebase عند تسجيل الدخول بالحساب نفسه.</p>
+      <div class="actions"><button id="exportJsonBtn" type="button">تنزيل نسخة JSON</button><button id="refreshBtn" class="secondary" type="button">تحديث العرض</button></div>
+      <label for="importFile">اختاري نسخة JSON لاستعادتها</label>
+      <input id="importFile" type="file" accept=".json,application/json">
+      <div class="actions"><button id="importBtn" class="secondary" type="button">استعادة النسخة وإضافتها</button></div>
+      <div id="backupStatus" class="muted" role="status"></div>
+      <p class="muted">الاستعادة بتضيف البيانات ولا تمسح الموجود. احتفظي بنسخة آمنة.</p>
+    </div>
+  </section>
 </section>
 </main>
-
+<footer>حسابات المكتب — إدارة الحسابات والمخزون</footer>
+      
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
+"use strict";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAB7dBBkXSziRSCba2W9BALKryBqkQXPL4",
   authDomain: "office-accounts-b6503.firebaseapp.com",
@@ -174,147 +194,492 @@ const firebaseConfig = {
   messagingSenderId: "614455108620",
   appId: "1:614455108620:web:25a1d339f1c21805ef3a29"
 };
-firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth();
-const db=firebase.database();
-const $=id=>document.getElementById(id);
-const today=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')};
-const fmt=n=>Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' ج.م';
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let transactions=[],movements=[],userRef=null,txRef=null,stockRef=null,txListener=null,stockListener=null,ready=false;
-const showStatus=s=>$('syncStatus').textContent=s;
 
-function dateDefaults(){
- $('txDate').value=today();$('stockDate').value=today();
- const d=new Date();d.setDate(d.getDate()-((d.getDay()+6)%7));
- $('weekStart').value=dateString(d);
- const e=new Date(d);e.setDate(e.getDate()+6);$('weekEnd').value=dateString(e);
-}
-function dateString(d){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
-function weekDates(){return [$('weekStart').value||today(),$('weekEnd').value||today()]}
-function totals(items){return items.reduce((a,x)=>{a[x.type]=(a[x.type]||0)+Number(x.amount||0);return a},{income:0,expense:0})}
-function inRange(x,s,e){return x>=s&&x<=e}
-function getStock(name){
- let sum=0;
- movements.filter(m=>m.name.toLowerCase()===name.toLowerCase()).sort((a,b)=>a.date.localeCompare(b.date)).forEach(m=>{
-  if(m.kind==='in')sum+=Number(m.qty);else if(m.kind==='out')sum-=Number(m.qty);else sum=Number(m.qty);
- });
- return sum;
-}
-function download(name,rows){
- const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');
- const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),a=document.createElement('a');
- a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-}
-function renderHome(){
- const [s,e]=weekDates(),items=transactions.filter(x=>inRange(x.date,s,e)),t=totals(items);
- $('homeIncome').textContent=fmt(t.income);$('homeExpense').textContent=fmt(t.expense);$('homeNet').textContent=fmt(t.income-t.expense);
- const names=[...new Set(movements.map(m=>m.name))];
- $('homeStock').textContent=names.reduce((n,x)=>n+Math.max(0,getStock(x)),0);
- const depts=[...new Set(items.map(x=>x.dept))];
- $('departmentSummary').innerHTML=depts.length?depts.map(d=>{const z=totals(items.filter(x=>x.dept===d));return `<div class="row"><span>${esc(d)}</span><span class="green">${fmt(z.income)}<br><span class="red">${fmt(z.expense)}</span></span></div>`}).join(''):'لا توجد عمليات هذا الأسبوع.';
- const recent=[...transactions].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,5);
- $('recentTransactions').innerHTML=recent.length?recent.map(x=>`<div class="row"><span>${esc(x.date)}<br>${esc(x.dept)}<br>${esc(x.desc)}</span><b class="${x.type==='income'?'green':'red'}">${fmt(x.amount)}</b></div>`).join(''):'لا توجد عمليات.';
-}
-function renderTx(){
- const f=$('txFilter').value,arr=[...transactions].filter(x=>f==='all'||x.type===f).sort((a,b)=>b.date.localeCompare(a.date));
- $('txTable').innerHTML=arr.length?arr.map(x=>`<tr><td>${esc(x.date)}</td><td>${x.type==='income'?'إيراد':'مصروف'}</td><td>${esc(x.dept)}</td><td>${fmt(x.amount)}</td><td>${esc(x.payment)}</td><td>${esc(x.desc)}</td><td><button type="button" onclick="deleteTx('${esc(x.id)}')">حذف</button></td></tr>`).join(''):'<tr><td colspan="7">لا توجد عمليات.</td></tr>';
-}
-function renderStock(){
- const names=[...new Set(movements.map(m=>m.name))];
- $('stockSummary').innerHTML=names.length?names.map(n=>`<div class="row"><span>${esc(n)}</span><b>${getStock(n)} رول</b></div>`).join(''):'لا يوجد مخزون مسجل.';
- const labels={in:'وارد',out:'صرف / بيع',adjust:'تسوية'};
- const arr=[...movements].sort((a,b)=>b.date.localeCompare(a.date));
- $('stockTable').innerHTML=arr.length?arr.map(m=>`<tr><td>${esc(m.date)}</td><td>${esc(m.name)}</td><td>${labels[m.kind]||m.kind}</td><td>${m.kind==='out'?'−':m.kind==='in'?'+':'='}${Number(m.qty)}</td><td>${esc(m.note)}</td><td><button type="button" onclick="deleteStock('${esc(m.id)}')">حذف</button></td></tr>`).join(''):'<tr><td colspan="6">لا توجد حركات.</td></tr>';
-}
-function renderReport(){
- const [s,e]=weekDates();
- if(s>e){$('repDept').textContent='تاريخ البداية يجب أن يكون قبل النهاية.';return}
- const items=transactions.filter(x=>inRange(x.date,s,e)),t=totals(items);
- $('repIncome').textContent=fmt(t.income);$('repExpense').textContent=fmt(t.expense);$('repNet').textContent=fmt(t.income-t.expense);$('repCount').textContent=items.length;
- const ds=[...new Set(items.map(x=>x.dept))];
- $('repDept').innerHTML=ds.length?ds.map(d=>{const z=totals(items.filter(x=>x.dept===d));return `<div class="row"><span>${esc(d)}</span><span>إيراد ${fmt(z.income)}<br>مصروف ${fmt(z.expense)}<br>الصافي ${fmt(z.income-z.expense)}</span></div>`}).join(''):'لا توجد عمليات في الفترة.';
- $('repPayment').innerHTML=['كاش','تحويل'].map(p=>{const z=totals(items.filter(x=>x.payment===p));return `<div class="row"><span>${p}</span><span>إيراد ${fmt(z.income)}<br>مصروف ${fmt(z.expense)}</span></div>`}).join('');
-}
-function renderAll(){renderHome();renderTx();renderStock();renderReport()}
-function addListener(ref,callback){
- ref.on('value',snap=>{
-  const v=snap.val()||{};
-  callback(Object.entries(v).map(([id,x])=>({...x,id})));
-  renderAll();
-  ready=true;showStatus('متصل — البيانات متزامنة');
- },err=>{showStatus('خطأ في الاتصال: '+err.message)});
-}
-function detachListeners(){
- if(txRef&&txListener)txRef.off('value',txListener);
- if(stockRef&&stockListener)stockRef.off('value',stockListener);
- txRef=stockRef=txListener=stockListener=null;
-}
-function startSync(user){
- detachListeners();ready=false;
- txRef=db.ref('officeAccounts/'+user.uid+'/transactions');
- stockRef=db.ref('officeAccounts/'+user.uid+'/movements');
- txListener=snap=>{const v=snap.val()||{};transactions=Object.entries(v).map(([id,x])=>({...x,id}));renderAll();};
- stockListener=snap=>{const v=snap.val()||{};movements=Object.entries(v).map(([id,x])=>({...x,id}));renderAll();};
- txRef.on('value',txListener,err=>showStatus('خطأ: '+err.message));
- stockRef.on('value',stockListener,err=>showStatus('خطأ: '+err.message));
- $('login').style.display='none';$('app').style.display='block';showStatus('جارٍ تحميل البيانات...');
-}
-function requireReady(){if(!auth.currentUser||!ready){alert('استني لحد ما البيانات تكتمل مزامنتها.');return false}return true}
-$('loginForm').addEventListener('submit',async e=>{
- e.preventDefault();$('loginMessage').textContent='جارٍ تسجيل الدخول...';
- try{await auth.signInWithEmailAndPassword($('email').value.trim(),$('password').value);$('password').value='';}
- catch(err){$('loginMessage').textContent='تعذر تسجيل الدخول. راجعي البريد وكلمة المرور وإعدادات Firebase.';}
-});
-auth.onAuthStateChanged(user=>{
- if(user)startSync(user);
- else{detachListeners();ready=false;$('app').style.display='none';$('login').style.display='block';showStatus('غير مسجل الدخول');}
-});
-$('logout').onclick=()=>auth.signOut();
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
- document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));
- document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===b.dataset.page));
- if(b.dataset.page==='reports')renderReport();
-});
-$('txForm').addEventListener('submit',async e=>{
- e.preventDefault();if(!requireReady())return;
- const amount=Number($('txAmount').value);if(!(amount>0)){alert('اكتبي مبلغًا صحيحًا');return}
- const ref=txRef.push();
- const item={date:$('txDate').value,type:$('txType').value,dept:$('txDept').value,amount,payment:$('txPayment').value,desc:$('txDesc').value.trim(),createdAt:Date.now()};
- try{await ref.set(item);e.target.reset();$('txDate').value=today();showStatus('تم حفظ العملية');}
- catch(err){alert('تعذر الحفظ: '+err.message)}
-});
-$('stockForm').addEventListener('submit',async e=>{
- e.preventDefault();if(!requireReady())return;
- const kind=$('stockKind').value,name=$('stockName').value.trim(),qty=Number($('stockQty').value);
- if(!(qty>0)||!name){alert('راجعي الكمية ونوع الورق');return}
- if(kind==='out'&&getStock(name)<qty&&!confirm('الكمية أكبر من الرصيد. هل تريدين الحفظ؟'))return;
- const ref=stockRef.push();
- try{await ref.set({date:$('stockDate').value,kind,qty,name,note:$('stockNote').value.trim(),createdAt:Date.now()});e.target.reset();$('stockDate').value=today();showStatus('تم حفظ حركة المخزون');}
- catch(err){alert('تعذر الحفظ: '+err.message)}
-});
-window.deleteTx=async id=>{if(!requireReady())return;if(confirm('حذف العملية؟'))try{await txRef.child(id).remove()}catch(e){alert('تعذر الحذف: '+e.message)}};
-window.deleteStock=async id=>{if(!requireReady())return;if(confirm('حذف حركة المخزون؟'))try{await stockRef.child(id).remove()}catch(e){alert('تعذر الحذف: '+e.message)}};
-$('txFilter').onchange=renderTx;$('makeReport').onclick=renderReport;$('weekStart').onchange=renderAll;$('weekEnd').onchange=renderAll;
-$('backup').onclick=()=>{
- const blob=new Blob([JSON.stringify({version:2,transactions,movements},null,2)],{type:'application/json'});
- const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='office-accounts-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+const $ = id => document.getElementById(id);
+const sectionNames = {
+  printing: "طباعة المركر",
+  patterns: "عمل الباترونات",
+  paper: "بيع رولات الورق",
+  other: "أخرى"
 };
-$('restoreFile').addEventListener('change',async e=>{
- const f=e.target.files[0];if(!f)return;
- try{
-  const d=JSON.parse(await f.text());
-  if(!Array.isArray(d.transactions)||!Array.isArray(d.movements))throw Error('bad file');
-  if(!requireReady())return;
-  if(!confirm('هتُضاف بيانات النسخة إلى البيانات الموجودة. هل تكملي؟'))return;
-  const tx={},st={};
-  d.transactions.forEach(x=>{const id=txRef.push().key;const {id:old,...item}=x;tx[id]=item});
-  d.movements.forEach(x=>{const id=stockRef.push().key;const {id:old,...item}=x;st[id]=item});
-  await Promise.all([txRef.update(tx),stockRef.update(st)]);
-  alert('تم استيراد النسخة');
- }catch(err){alert('الملف غير صالح أو تعذرت الاستعادة')}
- finally{e.target.value=''}
+const paymentNames = { cash: "نقدي", bank: "تحويل بنكي" };
+
+let auth, db, currentUser = null;
+let transactions = [], movements = [];
+let ready = false, reportShown = false;
+let subscriptions = [];
+
+function money(n) {
+  return (Number(n) || 0).toLocaleString("ar-EG", {
+    maximumFractionDigits: 2
+  }) + " ج.م";
+}
+
+function today() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+
+function say(id, text) { $(id).textContent = text; }
+
+function errorText(e) {
+  const code = e && e.code || "";
+  const messages = {
+    "auth/invalid-email": "البريد الإلكتروني غير صحيح.",
+    "auth/invalid-credential": "الإيميل أو كلمة المرور غير صحيحة.",
+    "auth/user-not-found": "الحساب غير موجود.",
+    "auth/wrong-password": "كلمة المرور غير صحيحة.",
+    "auth/too-many-requests": "محاولات كتير. استني شوية وجربي.",
+    "auth/network-request-failed": "اتأكدي من اتصال الإنترنت.",
+    "auth/unauthorized-domain": "ضيفي عنوان الموقع في Firebase Authorized domains.",
+    "auth/operation-not-allowed": "فعّلي تسجيل الدخول بالبريد الإلكتروني في Firebase.",
+    "PERMISSION_DENIED": "Firebase رفض الوصول للبيانات. راجعي صلاحيات قاعدة البيانات."
+  };
+  return messages[code] || ("حصل خطأ: " + (e && e.message || code || "غير معروف"));
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[c]);
+}
+
+function basePath() {
+  if (!currentUser) throw new Error("سجلي الدخول الأول.");
+  return "officeAccounts/" + currentUser.uid;
+}
+
+function subscribe(path, callback) {
+  const ref = db.ref(path);
+  const handler = snap => callback(snap.val());
+  ref.on("value", handler, e => say("syncStatus", errorText(e)));
+  subscriptions.push({ref, handler});
+}
+
+function unsubscribeAll() {
+  subscriptions.forEach(s => s.ref.off("value", s.handler));
+  subscriptions = [];
+}
+
+function toList(value) {
+  if (!value || typeof value !== "object") return [];
+  return Object.entries(value)
+    .filter(([,v]) => v && typeof v === "object")
+    .map(([id,v]) => ({...v, id: v.id || id}));
+}
+
+function save(path, value) {
+  return db.ref(basePath() + "/" + path).set(value);
+}
+
+function newId() { return db.ref().push().key; }
+
+function startSync(user) {
+  unsubscribeAll();
+  currentUser = user;
+  ready = false;
+  transactions = [];
+  movements = [];
+  let gotTx = false, gotStock = false;
+
+  say("userEmail", user.email || "");
+  say("syncStatus", "جاري تحميل البيانات...");
+
+  subscribe(basePath() + "/transactions", value => {
+    transactions = toList(value);
+    gotTx = true;
+    finish();
+  });
+
+  subscribe(basePath() + "/movements", value => {
+    movements = toList(value);
+    gotStock = true;
+    finish();
+  });
+
+  function finish() {
+    if (!gotTx || !gotStock) return;
+    ready = true;
+    say("syncStatus", "متصل — البيانات متزامنة مع Firebase.");
+    renderAll();
+    if (!reportShown) runReport();
+  }
+}
+
+function renderAll() {
+  renderHome();
+  renderTransactions();
+  renderStock();
+  if (reportShown) runReport();
+}
+
+function renderHome() {
+  const income = transactions.filter(t => t.type === "income")
+    .reduce((s,t) => s + Number(t.amount || 0), 0);
+  const expense = transactions.filter(t => t.type === "expense")
+    .reduce((s,t) => s + Number(t.amount || 0), 0);
+
+  $("homeIncome").textContent = money(income);
+  $("homeExpense").textContent = money(expense);
+  $("homeNet").textContent = money(income - expense);
+  $("homeCount").textContent = transactions.length;
+  $("homeStock").textContent = stockBalance();
+  $("homeMovements").textContent = movements.length;
+
+  const recent = [...transactions].sort((a,b) =>
+    String(b.date || "").localeCompare(String(a.date || ""))
+  ).slice(0,5);
+
+  $("recentList").innerHTML = recent.length
+    ? recent.map(transactionHTML).join("")
+    : '<p class="muted">مفيش عمليات مسجلة لسه.</p>';
+}
+
+function transactionHTML(t) {
+  const income = t.type === "income";
+  return `<div class="item">
+    <strong class="${income ? "good" : "bad"}">${income ? "إيراد" : "مصروف"} — ${money(t.amount)}</strong>
+    <div>${escapeHTML(sectionNames[t.section] || t.section || "أخرى")}</div>
+    <div class="muted">${escapeHTML(t.date || "")} · ${escapeHTML(paymentNames[t.payment] || "")}</div>
+    <div>${escapeHTML(t.description || "")}</div>
+    <div class="actions"><button class="danger" data-delete-tx="${escapeHTML(t.id)}">حذف العملية</button></div>
+  </div>`;
+}
+
+function renderTransactions() {
+  const list = [...transactions].sort((a,b) =>
+    String(b.date || "").localeCompare(String(a.date || ""))
+  );
+  $("transactionList").innerHTML = list.length
+    ? list.map(transactionHTML).join("")
+    : '<p class="muted">مفيش عمليات مسجلة لسه.</p>';
+}
+
+async function deleteTransaction(id) {
+  if (!confirm("متأكدة إنك عايزة تحذفي العملية دي؟")) return;
+  try {
+    await db.ref(basePath() + "/transactions/" + id).remove();
+    say("txStatus", "تم حذف العملية.");
+  } catch(e) { say("txStatus", errorText(e)); }
+}
+
+function stockBalance() {
+  return movements.reduce((balance,m) => {
+    const qty = Number(m.qty) || 0;
+    if (m.type === "in") return balance + qty;
+    if (m.type === "out") return balance - qty;
+    if (m.type === "adjust") return qty;
+    return balance;
+  }, 0);
+}
+
+function renderStock() {
+  $("stockBalance").textContent = stockBalance();
+  const labels = {in:"إضافة رولات",out:"صرف رولات",adjust:"تعديل الرصيد"};
+  const list = [...movements].sort((a,b) =>
+    String(b.date || "").localeCompare(String(a.date || ""))
+  );
+  $("stockList").innerHTML = list.length
+    ? list.map(m => `<div class="item">
+        <strong>${escapeHTML(labels[m.type] || m.type)}</strong>
+        <div>الكمية: ${escapeHTML(m.qty)}</div>
+        <div class="muted">${escapeHTML(m.date || "")}</div>
+        <div>${escapeHTML(m.note || "")}</div>
+        <div class="actions"><button class="danger" data-delete-stock="${escapeHTML(m.id)}">حذف الحركة</button></div>
+      </div>`).join("")
+    : '<p class="muted">مفيش حركات مخزون مسجلة.</p>';
+}
+
+async function deleteMovement(id) {
+  if (!confirm("حذف حركة المخزون دي؟")) return;
+  try {
+    await db.ref(basePath() + "/movements/" + id).remove();
+    say("stockStatus", "تم حذف الحركة.");
+  } catch(e) { say("stockStatus", errorText(e)); }
+}
+
+$("navigation").addEventListener("click", e => {
+  const btn = e.target.closest("[data-page]");
+  if (!btn) return;
+  document.querySelectorAll("#navigation button").forEach(b =>
+    b.classList.toggle("active", b === btn)
+  );
+  document.querySelectorAll(".page").forEach(p =>
+    p.classList.toggle("hidden", p.id !== "page-" + btn.dataset.page)
+  );
 });
-$('exportTx').onclick=()=>download('office-transactions.csv',[['التاريخ','النوع','القسم','المبلغ','طريقة الدفع','البيان'],...transactions.map(x=>[x.date,x.type==='income'?'إيراد':'مصروف',x.dept,x.amount,x.payment,x.desc])]);
-$('exportStock').onclick=()=>download('office-stock.csv',[['التاريخ','نوع الورق','الحركة','الكمية','ملاحظات'],...movements.map(x=>[x.date,x.name,{in:'وارد',out:'صرف / بيع',adjust:'تسوية'}[x.kind],x.qty,x.note])]);
-$('exportReport').onclick=()=>{const [s,e]=weekDates(),items=transactions.filter(x=>inRange(x.date,s,e)),t=totals(items);download('weekly-report.csv',[['التقرير الأسبوعي',s,e],['الإيرادات',t.income],['المصروفات',t.expense],['الصافي',t.income-t.expense],[],['التاريخ','الن
+
+$("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  $("loginBtn").disabled = true;
+  say("loginStatus", "جاري تسجيل الدخول...");
+  try {
+    await auth.signInWithEmailAndPassword(
+      $("email").value.trim(), $("password").value
+    );
+  } catch(err) {
+    say("loginStatus", errorText(err));
+  } finally {
+    $("loginBtn").disabled = false;
+  }
+});
+
+$("resetBtn").addEventListener("click", async () => {
+  const email = $("email").value.trim();
+  if (!email) {
+    say("loginStatus", "اكتبي بريدك الإلكتروني الأول.");
+    return;
+  }
+  try {
+    await auth.sendPasswordResetEmail(email);
+    say("loginStatus", "لو البريد مسجل، هتوصلك رسالة إعادة تعيين.");
+  } catch(e) { say("loginStatus", errorText(e)); }
+});
+
+$("logoutBtn").addEventListener("click", async () => {
+  try { await auth.signOut(); }
+  catch(e) { say("syncStatus", errorText(e)); }
+});
+
+$("transactionForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!ready) return say("txStatus", "استني لحد ما البيانات تخلص تحميل.");
+  const amount = Number($("txAmount").value);
+  if (!Number.isFinite(amount) || amount <= 0)
+    return say("txStatus", "اكتبي مبلغ صحيح أكبر من صفر.");
+
+  const item = {
+    id: newId(),
+    type: $("txType").value,
+    section: $("txSection").value,
+    amount,
+    payment: $("txPayment").value,
+    date: $("txDate").value,
+    description: $("txDescription").value.trim(),
+    createdAt: new Date().toISOString()
+  };
+
+  $("saveTxBtn").disabled = true;
+  try {
+    await save("transactions/" + item.id, item);
+    $("transactionForm").reset();
+    $("txDate").value = today();
+    say("txStatus", "تم حفظ العملية ومزامنتها.");
+  } catch(err) { say("txStatus", errorText(err)); }
+  finally { $("saveTxBtn").disabled = false; }
+});
+
+$("transactionList").addEventListener("click", e => {
+  const btn = e.target.closest("[data-delete-tx]");
+  if (btn) deleteTransaction(btn.dataset.deleteTx);
+});
+$("recentList").addEventListener("click", e => {
+  const btn = e.target.closest("[data-delete-tx]");
+  if (btn) deleteTransaction(btn.dataset.deleteTx);
+});
+
+$("stockForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!ready) return say("stockStatus", "استني لحد ما البيانات تخلص تحميل.");
+
+  const type = $("stockType").value;
+  const qty = Number($("stockQty").value);
+  if (!Number.isInteger(qty) || qty < 1)
+    return say("stockStatus", "اكتبي عدد رولات صحيح.");
+  if (type === "out" && qty > stockBalance())
+    return say("stockStatus", "الكمية أكبر من الرصيد المتاح.");
+
+  const item = {
+    id: newId(), type, qty,
+    date: $("stockDate").value,
+    note: $("stockNote").value.trim(),
+    createdAt: new Date().toISOString()
+  };
+
+  $("saveStockBtn").disabled = true;
+  try {
+    await save("movements/" + item.id, item);
+    $("stockForm").reset();
+    $("stockDate").value = today();
+    say("stockStatus", "تم حفظ حركة المخزون.");
+  } catch(err) { say("stockStatus", errorText(err)); }
+  finally { $("saveStockBtn").disabled = false; }
+});
+
+$("stockList").addEventListener("click", e => {
+  const btn = e.target.closest("[data-delete-stock]");
+  if (btn) deleteMovement(btn.dataset.deleteStock);
+});
+
+function runReport() {
+  const from = $("reportFrom").value, to = $("reportTo").value;
+  if (!from || !to || from > to) {
+    say("reportSections", "راجعي تاريخ البداية والنهاية.");
+    return;
+  }
+  reportShown = true;
+  const list = transactions.filter(t =>
+    String(t.date || "") >= from && String(t.date || "") <= to
+  );
+  const income = list.filter(t => t.type === "income")
+    .reduce((s,t) => s + Number(t.amount || 0), 0);
+  const expense = list.filter(t => t.type === "expense")
+    .reduce((s,t) => s + Number(t.amount || 0), 0);
+
+  $("reportIncome").textContent = money(income);
+  $("reportExpense").textContent = money(expense);
+  $("reportNet").textContent = money(income - expense);
+  $("reportCount").textContent = list.length;
+
+  const sections = {}, payments = {};
+  list.forEach(t => {
+    const signed = (t.type === "income" ? 1 : -1) * Number(t.amount || 0);
+    sections[t.section] = (sections[t.section] || 0) + signed;
+    payments[t.payment] = (payments[t.payment] || 0) + signed;
+  });
+
+  $("reportSections").innerHTML = Object.keys(sections).length
+    ? Object.entries(sections).map(([k,v]) =>
+      `<div class="item">${escapeHTML(sectionNames[k] || k)}: <strong>${money(v)}</strong></div>`
+    ).join("")
+    : '<p class="muted">مفيش بيانات في الفترة دي.</p>';
+
+  $("reportPayments").innerHTML = Object.keys(payments).length
+    ? Object.entries(payments).map(([k,v]) =>
+      `<div class="item">${escapeHTML(paymentNames[k] || k)}: <strong>${money(v)}</strong></div>`
+    ).join("")
+    : '<p class="muted">مفيش بيانات في الفترة دي.</p>';
+}
+
+$("runReportBtn").addEventListener("click", runReport);
+
+function downloadFile(name, content, type) {
+  const blob = new Blob(["\uFEFF", content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+$("csvBtn").addEventListener("click", () => {
+  runReport();
+  const from = $("reportFrom").value, to = $("reportTo").value;
+  const list = transactions.filter(t =>
+    String(t.date || "") >= from && String(t.date || "") <= to
+  );
+  const rows = [
+    ["التاريخ","النوع","القسم","المبلغ","طريقة الدفع","التفاصيل"],
+    ...list.map(t => [
+      t.date || "",
+      t.type === "income" ? "إيراد" : "مصروف",
+      sectionNames[t.section] || t.section || "",
+      t.amount,
+      paymentNames[t.payment] || "",
+      t.description || ""
+    ])
+  ];
+  const csv = rows.map(row => row.map(v =>
+    '"' + String(v ?? "").replace(/"/g, '""') + '"'
+  ).join(",")).join("\r\n");
+  downloadFile("office-weekly-report.csv", csv, "text/csv;charset=utf-8");
+});
+
+$("exportJsonBtn").addEventListener("click", () => {
+  if (!ready) return say("backupStatus", "استني لحد ما البيانات تخلص تحميل.");
+  downloadFile("office-accounts-backup.json", JSON.stringify({
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    transactions,
+    movements
+  }, null, 2), "application/json");
+  say("backupStatus", "تم تنزيل نسخة البيانات.");
+});
+
+$("refreshBtn").addEventListener("click", () => {
+  renderAll();
+  say("backupStatus", "البيانات بتتحدّث تلقائيًا من Firebase.");
+});
+
+$("importBtn").addEventListener("click", async () => {
+  const file = $("importFile").files[0];
+  if (!file) return say("backupStatus", "اختاري ملف JSON الأول.");
+  if (!ready || !currentUser) return say("backupStatus", "سجلي الدخول الأول.");
+
+  try {
+    const data = JSON.parse(await file.text());
+    if (!Array.isArray(data.transactions) || !Array.isArray(data.movements))
+      throw new Error("ملف النسخة مش بالصيغة الصحيحة.");
+    if (!confirm("هيتم إضافة بيانات النسخة للحساب الحالي. تكملي؟")) return;
+
+    const txUpdates = {}, stockUpdates = {};
+    data.transactions.forEach(t => {
+      const id = newId();
+      txUpdates[id] = {...t, id};
+    });
+    data.movements.forEach(m => {
+      const id = newId();
+      stockUpdates[id] = {...m, id};
+    });
+
+    await Promise.all([
+      db.ref(basePath() + "/transactions").update(txUpdates),
+      db.ref(basePath() + "/movements").update(stockUpdates)
+    ]);
+    say("backupStatus", "تمت إضافة بيانات النسخة.");
+  } catch(err) {
+    say("backupStatus", errorText(err));
+  }
+});
+
+function setDates() {
+  const t = today();
+  $("txDate").value = t;
+  $("stockDate").value = t;
+  const d = new Date();
+  const monday = new Date(d);
+  monday.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+  $("reportFrom").value = `${monday.getFullYear()}-${String(monday.getMonth()+1).padStart(2,"0")}-${String(monday.getDate()).padStart(2,"0")}`;
+  $("reportTo").value = t;
+}
+
+function init() {
+  setDates();
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    auth = firebase.auth();
+    db = firebase.database();
+    say("loginStatus", "جاهز لتسجيل الدخول.");
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        $("loginScreen").style.display = "none";
+        $("appScreen").style.display = "block";
+        startSync(user);
+      } else {
+        unsubscribeAll();
+        currentUser = null;
+        ready = false;
+        transactions = [];
+        movements = [];
+        $("appScreen").style.display = "none";
+        $("loginScreen").style.display = "block";
+        say("loginStatus", "سجلي الدخول للمتابعة.");
+      }
+    }, err => say("loginStatus", errorText(err)));
+  } catch(err) {
+    say("loginStatus", "تعذر تشغيل Firebase: " + errorText(err));
+  }
+}
+
+init();
+</script>
+</body>
+  </html>
+
+
+ 
+ 
