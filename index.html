@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -44,6 +43,19 @@ nav button.active{background:var(--lime);color:#17200b}
 #loginScreen{max-width:480px;margin:35px auto}
 #appScreen{display:none}
 footer{text-align:center;color:var(--muted);padding:18px;font-size:12px}
+
+.monthly-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.monthly-tile{min-height:118px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:13px;padding:12px}
+.monthly-tile span:not(.monthly-icon){font-size:16px}
+.monthly-tile small{font-size:11px;font-weight:normal;color:var(--muted)}
+.monthly-icon{font-size:25px;line-height:1.2;font-weight:bold}
+.income-tile .monthly-icon{color:var(--green)}
+.expense-tile .monthly-icon{color:var(--red)}
+.monthly-detail-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.monthly-detail-heading h2{margin:0}
+#monthlyTransactionList{margin-top:10px}
+@media(max-width:380px){.monthly-actions{grid-template-columns:1fr}}
+
 @media(max-width:520px){main{padding:10px}.row{grid-template-columns:1fr}header h1{font-size:21px}}
 </style>
 </head>
@@ -97,6 +109,34 @@ footer{text-align:center;color:var(--muted);padding:18px;font-size:12px}
         <div class="stat"><small>رصيد الرولات</small><strong id="homeStock">0</strong></div>
         <div class="stat"><small>حركات المخزون</small><strong id="homeMovements">0</strong></div>
       </div>
+    </div>
+    <div class="card">
+      <h2>كشف الإيرادات والمصروفات الشهري</h2>
+      <label for="monthlyMonth">اختاري الشهر</label>
+      <input id="monthlyMonth" type="month">
+      <div class="monthly-actions">
+        <button type="button" class="monthly-tile income-tile" data-month-type="income">
+          <span class="monthly-icon" aria-hidden="true">↗</span>
+          <span>الإيرادات</span>
+          <small>عرض كل إيرادات الشهر</small>
+        </button>
+        <button type="button" class="monthly-tile expense-tile" data-month-type="expense">
+          <span class="monthly-icon" aria-hidden="true">↘</span>
+          <span>المصروفات</span>
+          <small>عرض كل مصروفات الشهر</small>
+        </button>
+      </div>
+    </div>
+    <div id="monthlyDetailCard" class="card hidden">
+      <div class="monthly-detail-heading">
+        <h2 id="monthlyDetailTitle">تفاصيل الشهر</h2>
+        <button type="button" id="closeMonthlyDetails" class="secondary">إغلاق</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><small id="monthlyTotalLabel">الإجمالي</small><strong id="monthlyTotal">0 ج.م</strong></div>
+        <div class="stat"><small>عدد العمليات</small><strong id="monthlyCount">0</strong></div>
+      </div>
+      <div id="monthlyTransactionList"></div>
     </div>
     <div class="card"><h2>آخر العمليات</h2><div id="recentList" class="muted">مفيش عمليات مسجلة.</div></div>
   </section>
@@ -178,7 +218,7 @@ footer{text-align:center;color:var(--muted);padding:18px;font-size:12px}
 </section>
 </main>
 <footer>حسابات المكتب — إدارة الحسابات والمخزون</footer>
-      
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -207,6 +247,7 @@ const paymentNames = { cash: "نقدي", bank: "تحويل بنكي" };
 let auth, db, currentUser = null;
 let transactions = [], movements = [];
 let ready = false, reportShown = false;
+let monthlyDetailType = null;
 let subscriptions = [];
 
 function money(n) {
@@ -214,7 +255,6 @@ function money(n) {
     maximumFractionDigits: 2
   }) + " ج.م";
 }
-
 function today() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
@@ -306,8 +346,36 @@ function startSync(user) {
   }
 }
 
+function renderMonthlyDetails(type) {
+  monthlyDetailType = type;
+  const month = $("monthlyMonth").value;
+  const isIncome = type === "income";
+  const label = isIncome ? "الإيرادات" : "المصروفات";
+  $("monthlyDetailCard").classList.remove("hidden");
+  $("monthlyDetailTitle").textContent = label + " — " + (month || "اختاري شهر");
+  $("monthlyTotalLabel").textContent = "إجمالي " + label;
+
+  if (!month) {
+    $("monthlyTotal").textContent = money(0);
+    $("monthlyCount").textContent = "0";
+    $("monthlyTransactionList").innerHTML = '<p class="muted">اختاري الشهر الأول.</p>';
+    return;
+  }
+
+  const list = transactions.filter(t =>
+    t.type === type && String(t.date || "").startsWith(month)
+  ).sort((a,b) => String(b.date || "").localeCompare(String(a.date || "")));
+  const total = list.reduce((sum,t) => sum + Number(t.amount || 0), 0);
+  $("monthlyTotal").textContent = money(total);
+  $("monthlyCount").textContent = list.length;
+  $("monthlyTransactionList").innerHTML = list.length
+    ? list.map(transactionHTML).join("")
+    : '<p class="muted">مفيش ' + label + ' مسجلة في الشهر ده.</p>';
+}
+
 function renderAll() {
   renderHome();
+  if (monthlyDetailType) renderMonthlyDetails(monthlyDetailType);
   renderTransactions();
   renderStock();
   if (reportShown) runReport();
@@ -409,6 +477,24 @@ $("navigation").addEventListener("click", e => {
   );
 });
 
+document.querySelectorAll("[data-month-type]").forEach(btn => {
+  btn.addEventListener("click", () => renderMonthlyDetails(btn.dataset.monthType));
+});
+
+$("monthlyMonth").addEventListener("change", () => {
+  if (monthlyDetailType) renderMonthlyDetails(monthlyDetailType);
+});
+
+$("closeMonthlyDetails").addEventListener("click", () => {
+  monthlyDetailType = null;
+  $("monthlyDetailCard").classList.add("hidden");
+});
+
+$("monthlyTransactionList").addEventListener("click", e => {
+  const btn = e.target.closest("[data-delete-tx]");
+  if (btn) deleteTransaction(btn.dataset.deleteTx);
+});
+
 $("loginForm").addEventListener("submit", async e => {
   e.preventDefault();
   $("loginBtn").disabled = true;
@@ -426,7 +512,8 @@ $("loginForm").addEventListener("submit", async e => {
 
 $("resetBtn").addEventListener("click", async () => {
   const email = $("email").value.trim();
-  if (!email) {
+
+   if (!email) {
     say("loginStatus", "اكتبي بريدك الإلكتروني الأول.");
     return;
   }
@@ -637,6 +724,7 @@ $("importBtn").addEventListener("click", async () => {
 
 function setDates() {
   const t = today();
+  $("monthlyMonth").value = t.slice(0, 7);
   $("txDate").value = t;
   $("stockDate").value = t;
   const d = new Date();
@@ -679,7 +767,4 @@ init();
 </script>
 </body>
   </html>
-
-
- 
  
